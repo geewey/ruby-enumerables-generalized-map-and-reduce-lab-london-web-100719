@@ -1,27 +1,43 @@
 # Your Code Here
 
-def map(array)
+def map(source_array)
   new_array = []
   i = 0
-  while i < array.length
-    new_array << yield(array[i])
+  while i < source_array.length do
+    new_array.push ( yield(source_array[i]) )
     i += 1
   end
-  new_array
+
+  return new_array
 end
 
 
-def reduce(array, starting_value=nil)
-  if starting_value
-    sum = starting_value
-    i = 0
-  else
-    sum = array[0]
-    i = 1
-  end
-  while i < array.length
-    sum = yield(sum, array[i])
+##  aggregator = true
+# returns true when all values are truthy
+# returns true when a truthy value is present
+
+##  aggregator = false
+# returns false when any value is false
+# returns false when no truthy value is present
+  
+
+def reduce(source_array, starting_point=0)
+  aggregator = source_array[0]
+  i = 0
+  while i < source_array.length
+    yield(source_array, starting_point)  
+    
+    # # returns a running total when not given a starting point
+    # if (source_array[i] is integer)
+    #   aggregator = 0
+    #   while i < source_array.length do
+    #     aggregator += source_array[i]
+    #     i += 1
+    #   end
+    # end
+    
     i += 1
   end
-  sum
+  
+  return aggregator
 end
